@@ -1,10 +1,12 @@
-import Background from "./Background";
+// import Background from "./Background";
+import Starfield from "./Starfield";
 import "./globals.css";
 
 function App() {
   return (
     <>
-      <Background />
+      <Starfield />
+      {/* <Background /> */}
       <p className="max-w-[50ch] mx-auto my-8">
         Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit aut
         nemo maiores odio veniam perspiciatis, explicabo architecto minima
