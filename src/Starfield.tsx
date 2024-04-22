@@ -4,18 +4,15 @@ import { motion } from "framer-motion";
 interface Props {
   speedFactor?: number;
   backgroundColor?: string;
-  starColor?: [[number, number, number]];
+  starColor?: [number, number, number];
   starCount?: number;
 }
 
 export default function Starfield(props: Props) {
   const {
-    speedFactor = 0.02,
+    speedFactor = 0.03,
     backgroundColor = "black",
-    starColor = [
-      [255, 255, 255],
-      [34, 193, 153],
-    ],
+    starColor = [34, 193, 153],
     starCount = 5000,
   } = props;
 
@@ -61,14 +58,13 @@ export default function Starfield(props: Props) {
         };
 
         const putPixel = (x: number, y: number, brightness: number) => {
-          const g = Math.round(Math.random());
           const rgb =
             "rgba(" +
-            starColor[g][0] +
+            starColor[0] +
             "," +
-            starColor[g][1] +
+            starColor[1] +
             "," +
-            starColor[g][2] +
+            starColor[2] +
             "," +
             brightness +
             ")";
@@ -116,7 +112,7 @@ export default function Starfield(props: Props) {
             }
 
             const d = star.z / 1000.0;
-            const b = 1 - d * d;
+            const b = 1 - d * d * d;
 
             putPixel(x, y, b);
           }
