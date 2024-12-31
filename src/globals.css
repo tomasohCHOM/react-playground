@@ -6,14 +6,14 @@
 
 :root {
   font-family: "Montserrat", sans-serif;
-  --color-primary: 26, 33, 37;
+  --color-primary: 96, 84, 153;
   --color-secondary-300: 35, 41, 43;
   --color-secondary: 45, 50, 55;
   --color-text: 248, 242, 246;
   --color-contrast-muted: 221, 240, 238;
   --color-contrast: 34, 193, 153;
 
-  background-color: rgb(var(--color-primary));
+  background: radial-gradient(30% 50% at 50% 50%, #60549980, #201c33 70.69%);
   color: rgb(var(--color-text));
 }
 
