@@ -1,10 +1,6 @@
 import "./globals.css";
 import { motion } from "framer-motion";
-
-interface Coordinates {
-  x: number;
-  y: number;
-}
+import { Coordinates, team } from "./team";
 
 interface Edge {
   start: Coordinates;
@@ -34,12 +30,6 @@ function LineConnector({
 }
 
 function Constellation() {
-  const circlePositions: Coordinates[] = [
-    { x: 650, y: 270 },
-    { x: 750, y: 550 },
-    { x: 250, y: 550 },
-    { x: 400, y: 100 },
-  ];
   const edges: Edge[] = [
     { start: { x: 650, y: 270 }, end: { x: 750, y: 550 } },
     { start: { x: 750, y: 550 }, end: { x: 250, y: 550 } },
@@ -49,18 +39,62 @@ function Constellation() {
 
   return (
     <motion.svg width={1024} height={720}>
-      {circlePositions.map(({ x, y }, i) => (
-        <circle
-          key={"Circle " + i}
-          cx={x}
-          cy={y}
-          r={35}
-          className="fill-white"
-        />
-      ))}
       {edges.map(({ start, end }, i) => {
         return <LineConnector key={"Line " + i} start={start} end={end} />;
       })}
+      {team.map((officer) => (
+        <a href={officer.href} key={officer.id}>
+          <motion.svg
+            whileHover="hover"
+            initial="initial"
+            style={{ overflow: "visible" }}
+          >
+            <motion.circle
+              cx={officer.vertex.x}
+              cy={officer.vertex.y}
+              r={40}
+              className="stroke-white fill-none"
+              strokeWidth={2}
+              variants={{
+                initial: { pathLength: 0 },
+                hover: { pathLength: 1 },
+              }}
+              transition={{ duration: 0.5 }}
+            />
+            {/* Officer Image */}
+            <defs>
+              <clipPath id={`clip-circle-${officer.id}`}>
+                <circle cx={officer.vertex.x} cy={officer.vertex.y} r={35} />
+              </clipPath>
+            </defs>
+            <image
+              x={officer.vertex.x - 35}
+              y={officer.vertex.y - 35}
+              width={70}
+              height={70}
+              href="/capybara.jpg"
+              clipPath={`url(#clip-circle-${officer.id})`}
+            />
+            {/* Name & Role */}
+            <motion.text
+              x={officer.vertex.x}
+              y={officer.vertex.y + (officer.textBelow ? 55 : -60)}
+              textAnchor="middle"
+              className="fill-white"
+            >
+              {officer.name}
+            </motion.text>
+            <motion.text
+              x={officer.vertex.x}
+              y={officer.vertex.y + (officer.textBelow ? 55 : -60) + 20}
+              textAnchor="middle"
+              className="fill-white text-sm"
+            >
+              {officer.role}
+            </motion.text>
+          </motion.svg>
+        </a>
+      ))}
     </motion.svg>
   );
 }
