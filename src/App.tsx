@@ -49,22 +49,10 @@ function Constellation() {
             initial="initial"
             style={{ overflow: "visible" }}
           >
-            <motion.circle
-              cx={officer.vertex.x}
-              cy={officer.vertex.y}
-              r={40}
-              className="stroke-white fill-none"
-              strokeWidth={2}
-              variants={{
-                initial: { pathLength: 0 },
-                hover: { pathLength: 1 },
-              }}
-              transition={{ duration: 0.5 }}
-            />
             {/* Officer Image */}
             <defs>
               <clipPath id={`clip-circle-${officer.id}`}>
-                <circle cx={officer.vertex.x} cy={officer.vertex.y} r={35} />
+                <circle cx={officer.vertex.x} cy={officer.vertex.y} r={32} />
               </clipPath>
             </defs>
             <image
@@ -86,12 +74,24 @@ function Constellation() {
             </motion.text>
             <motion.text
               x={officer.vertex.x}
-              y={officer.vertex.y + (officer.textBelow ? 55 : -60) + 20}
+              y={officer.vertex.y + (officer.textBelow ? 55 : -60) + 18}
               textAnchor="middle"
               className="fill-white text-sm"
             >
               {officer.role}
             </motion.text>
+            <motion.circle
+              r={40}
+              cx={officer.vertex.x}
+              cy={officer.vertex.y}
+              strokeWidth={2}
+              variants={{
+                initial: { pathLength: 0 },
+                hover: { pathLength: 1.05 },
+              }}
+              transition={{ duration: 0.5, ease: "easeInOut" }}
+              className="fill-none stroke-white"
+            />
           </motion.svg>
         </a>
       ))}
