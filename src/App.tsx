@@ -1,6 +1,7 @@
 import "./globals.css";
 import { motion } from "framer-motion";
-import { Coordinates, team } from "./team";
+import { Coordinates, Team, team, teamEdges } from "./team";
+import { useState } from "react";
 
 interface Edge {
   start: Coordinates;
@@ -14,31 +15,39 @@ function LineConnector({
   start: Coordinates;
   end: Coordinates;
 }) {
-  const path = `M${start.x},${start.y} L ${end.x}, ${end.y}}`;
+  const path = `M${start.x},${start.y} L ${end.x}, ${end.y}`;
   return (
     <motion.svg>
       <motion.path
         d={path}
-        stroke="white"
         strokeWidth={2}
         initial={{ pathLength: 0 }}
         animate={{ pathLength: 1 }}
         transition={{ duration: 1 }}
+        className="stroke-slate-300"
       />
     </motion.svg>
   );
 }
 
-function Constellation() {
-  const edges: Edge[] = [
-    { start: { x: 650, y: 270 }, end: { x: 750, y: 550 } },
-    { start: { x: 750, y: 550 }, end: { x: 250, y: 550 } },
-    { start: { x: 400, y: 100 }, end: { x: 250, y: 550 } },
-    { start: { x: 400, y: 100 }, end: { x: 650, y: 270 } },
-  ];
-
+function Constellation({
+  teamIndex,
+  team,
+  edges,
+}: {
+  teamIndex: number;
+  team: Team[];
+  edges: Edge[];
+}) {
   return (
-    <motion.svg width={1024} height={720}>
+    <motion.svg
+      key={teamIndex}
+      width={1024}
+      height={800}
+      initial={{ opacity: 0.15 }}
+      whileInView={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
       {edges.map(({ start, end }, i) => {
         return <LineConnector key={"Line " + i} start={start} end={end} />;
       })}
@@ -100,7 +109,30 @@ function Constellation() {
 }
 
 function App() {
-  return <Constellation />;
+  const [teamIndex, setTeamIndex] = useState(0);
+
+  return (
+    <div className="w-full flex items-center justify-between">
+      <button
+        className={`${teamIndex === 0 ? "invisible" : ""}`}
+        onClick={() => setTeamIndex(teamIndex - 1)}
+      >
+        Previous
+      </button>
+      <Constellation
+        teamIndex={teamIndex}
+        team={team[teamIndex]}
+        edges={teamEdges[teamIndex]}
+      />
+
+      <button
+        className={`${teamIndex === team.length - 1 ? "invisible" : ""}`}
+        onClick={() => setTeamIndex(teamIndex + 1)}
+      >
+        Next
+      </button>
+    </div>
+  );
 }
 
 export default App;

@@ -17,6 +17,7 @@
 
   background: radial-gradient(30% 50% at 50% 50%, #60549980, #201c33 70.69%);
   color: rgb(var(--color-text));
+  color-scheme: dark;
 }
 
 html {
