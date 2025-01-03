@@ -5,10 +5,14 @@ import { FAQBackgroundEffects } from "./components/background.tsx";
 import { LandingFooter } from "./components/footer.tsx";
 import { Constellation } from "./components/constellation.tsx";
 import { FAQ } from "./components/faq.tsx";
+import { useScroll } from "framer-motion";
 
 function App() {
   const [teamIndex, setTeamIndex] = useState(0);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const { scrollY, scrollYProgress } = useScroll();
+
+  console.log(scrollY, scrollYProgress);
 
   useEffect(() => {
     const handleResize = () => {
@@ -20,7 +24,7 @@ function App() {
 
   return (
     <main className="overflow-x-hidden">
-      <div className="w-full relative flex items-center justify-center">
+      <div className="w-full relative flex items-center justify-center radial">
         <button
           className={`absolute left-1/3 top-1/2 ${
             teamIndex === 0 ? "invisible" : ""
@@ -45,7 +49,7 @@ function App() {
           edges={teamEdges[teamIndex]}
         />
       </div>
-      <section className="relative flex w-[100vw] flex-col items-center justify-start overflow-hidden pb-40 font-normal md:pt-32 md:pb-24 md:text-md">
+      <section className="relative flex w-[98vw] flex-col items-center justify-start overflow-hidden pb-40 font-normal md:pt-32 md:pb-24 md:text-md">
         <FAQBackgroundEffects />
         <div
           id="frequently-asked-questions"
