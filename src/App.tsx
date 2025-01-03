@@ -1,7 +1,7 @@
 import "./globals.css";
 import { motion } from "framer-motion";
 import { Coordinates, Team, team, teamEdges } from "./team";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface Edge {
   start: Coordinates;
@@ -31,10 +31,12 @@ function LineConnector({
 }
 
 function Constellation({
+  screenWidth,
   teamIndex,
   team,
   edges,
 }: {
+  screenWidth: number;
   teamIndex: number;
   team: Team[];
   edges: Edge[];
@@ -42,11 +44,14 @@ function Constellation({
   return (
     <motion.svg
       key={teamIndex}
-      width={1024}
-      height={800}
+      width={screenWidth >= 1024 ? 1024 : 740}
+      height={screenWidth >= 1024 ? 800 : 600}
+      viewBox="0 0 1024 800"
+      preserveAspectRatio="xMidYMid meet"
       initial={{ opacity: 0.15 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
+      className="overflow-hidden"
     >
       {edges.map(({ start, end }, i) => {
         return <LineConnector key={"Line " + i} start={start} end={end} />;
@@ -110,27 +115,41 @@ function Constellation({
 
 function App() {
   const [teamIndex, setTeamIndex] = useState(0);
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
-    <div className="w-full flex items-center justify-between">
+    <div className="w-full relative">
       <button
-        className={`${teamIndex === 0 ? "invisible" : ""}`}
+        className={`absolute left-0 top-1/2 ${
+          teamIndex === 0 ? "invisible" : ""
+        }`}
         onClick={() => setTeamIndex(teamIndex - 1)}
       >
-        Previous
+        &#8592;
+      </button>
+
+      <button
+        className={`absolute top-1/2 right-0 ${
+          teamIndex === team.length - 1 ? "invisible" : ""
+        }`}
+        onClick={() => setTeamIndex(teamIndex + 1)}
+      >
+        &#8594;
       </button>
       <Constellation
+        screenWidth={screenWidth}
         teamIndex={teamIndex}
         team={team[teamIndex]}
         edges={teamEdges[teamIndex]}
       />
-
-      <button
-        className={`${teamIndex === team.length - 1 ? "invisible" : ""}`}
-        onClick={() => setTeamIndex(teamIndex + 1)}
-      >
-        Next
-      </button>
     </div>
   );
 }
