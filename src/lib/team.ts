@@ -1,23 +1,4 @@
-export interface Coordinates {
-  x: number;
-  y: number;
-}
-
-export interface Edge {
-  start: Coordinates;
-  end: Coordinates;
-}
-
-export interface Team {
-  id: string;
-  name: string;
-  image: string;
-  role: string;
-  tag?: string;
-  href: string;
-  vertex: Coordinates;
-  textBelow: boolean;
-}
+import { Edge, Team } from "../types/types";
 
 export const team: Team[][] = [
   [
