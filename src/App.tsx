@@ -5,14 +5,14 @@ import { FAQBackgroundEffects } from "./components/background.tsx";
 import { LandingFooter } from "./components/footer.tsx";
 import { Constellation } from "./components/constellation.tsx";
 import { FAQ } from "./components/faq.tsx";
-import { useScroll } from "framer-motion";
+// import { useScroll } from "framer-motion";
 
 function App() {
   const [teamIndex, setTeamIndex] = useState(0);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
-  const { scrollY, scrollYProgress } = useScroll();
+  // const { scrollY, scrollYProgress } = useScroll();
 
-  console.log(scrollY, scrollYProgress);
+  // console.log(scrollY, scrollYProgress);
 
   useEffect(() => {
     const handleResize = () => {

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { FaChevronDown } from "react-icons/fa";
 import { FAQType } from "../types/types.ts";
 import { faqs } from "../lib/faq.ts";
+import { motion } from "framer-motion";
+import { motionVariant } from "../lib/motion.ts";
 
 interface FAQDropDownProps {
   question: string;
@@ -56,8 +58,15 @@ const FAQDropDown: React.FC<FAQDropDownProps> = ({ question, answer }) => {
 
 export const FAQ = () => {
   return (
-    <>
-      <p className="mb-4 text-xxl font-normal text-white md:text-[5rem]">FAQ</p>
+    <motion.div
+      variants={motionVariant}
+      initial="horizontalHidden"
+      whileInView="horizontalVisible"
+      viewport={{ once: true }}
+    >
+      <p className="mb-4 text-center text-xxl font-normal text-white md:text-[5rem]">
+        FAQ
+      </p>
       <div className="flex flex-col items-center">
         {faqs.map((faq: FAQType) => {
           return (
@@ -83,6 +92,6 @@ export const FAQ = () => {
           and we&apos;ll get back to you ASAP!
         </p>
       </div>{" "}
-    </>
+    </motion.div>
   );
 };
