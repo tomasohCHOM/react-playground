@@ -1,5 +1,5 @@
 import { Coordinates, Edge, Team } from "../types/types.ts";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 
 function LineConnector({
   start,

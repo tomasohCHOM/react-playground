@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FaChevronDown } from "react-icons/fa";
 import { FAQType } from "../types/types.ts";
 import { faqs } from "../lib/faq.ts";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { motionVariant } from "../lib/motion.ts";
 
 interface FAQDropDownProps {

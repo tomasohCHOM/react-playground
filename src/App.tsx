@@ -5,7 +5,7 @@ import { FAQBackgroundEffects } from "./components/background.tsx";
 import { LandingFooter } from "./components/footer.tsx";
 import { Constellation } from "./components/constellation.tsx";
 import { FAQ } from "./components/faq.tsx";
-// import { useScroll } from "framer-motion";
+// import { useScroll } from "motion/react";
 
 function App() {
   const [teamIndex, setTeamIndex] = useState(0);
